@@ -1,6 +1,7 @@
 import test from 'ava';
-import {getMissingRequiredVariablesTest} from './queryHelpers-data'
-import {getMissingRequiredVariables} from '../queryHelpers'
+import 'babel-register';
+import {getMissingRequiredVariablesTest} from './queryHelpers-data';
+import {getMissingRequiredVariables} from '../queryHelpers';
 
 test('Valid "falsy" values in getMissingRequiredVariables', t => {
   const {variableDefinitions, variables} = getMissingRequiredVariablesTest
