@@ -119,12 +119,14 @@ export const invalidateMutationsOnNewQuery = (op, cachedMutations) => {
 };
 
 export const getMissingRequiredVariables = (variableDefinitions, variables) => {
+  console.log({variableDefinitions, variables})
   const missingVars = [];
   for (let i = 0; i < variableDefinitions.length; i++) {
     const def = variableDefinitions[i];
     if (def.type.kind === NON_NULL_TYPE) {
       const defKey = def.variable.name.value;
-      if (!variables[defKey]) {
+      const variableVal = variables[defKey];
+      if (variableVal === undefined || variableVal === null) {
         missingVars.push(defKey);
       }
     }
