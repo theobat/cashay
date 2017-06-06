@@ -10,9 +10,7 @@ export const printMinimalQuery = (reqAST, idFieldName, variables, op, schema, fo
     op,
     schema
   };
-  console.log(print(reqAST))
   reqAST.variableDefinitions = minimizeQueryAST(reqAST, idFieldName, variables, schema.querySchema, [], context);
-  console.log(print(reqAST))
   return print(reqAST)
 };
 
@@ -30,7 +28,6 @@ const safeToSendDirectives = (directives) => {
 // mutates initialVariableDefinitions
 const minimizeQueryAST = (reqAST, idFieldName, variables, subSchema, initialVariableDefinitions = [], context) => {
   const {selections} = reqAST.selectionSet;
-  console.log(reqAST && reqAST.name && reqAST.name.value)
   for (let i = 0; i < selections.length; i++) {
     const field = selections[i];
     // if it has to go to the server, create some variable definitions and remove the pieces that don't have the required vars
