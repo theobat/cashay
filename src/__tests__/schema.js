@@ -306,7 +306,7 @@ const Query = new GraphQLObjectType({
         _id: {type: new GraphQLNonNull(GraphQLString)}
       },
       resolve: function(source, {_id}) {
-        return PostDB.find(doc => doc._id === _id);
+        return PostDB.find(doc => doc._id === _id) || {};
       }
     },
     getGroup: {
@@ -365,7 +365,7 @@ const Mutation = new GraphQLObjectType({
         postId: {type: new GraphQLNonNull(GraphQLString)}
       },
       resolve(source, {postId}) {
-        const removedPostIdx= PostDB.findIndex(doc => doc.postId === postId);
+        const removedPostIdx= PostDB.findIndex(doc => doc._id === postId);
         let didRemove = false;
         if (removedPostIdx !== -1) {
           PostDB.splice(removedPostIdx,1);
