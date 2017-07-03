@@ -194,6 +194,7 @@ class Cashay {
     this.priorityTransport = priorityTransport === undefined ? this.priorityTransport : priorityTransport;
     this.schema = schema || this.schema;
     this.subscriber = subscriber || this.subscriber;
+    this._invalidate = this._invalidate.bind(this);
   }
 
   /**
