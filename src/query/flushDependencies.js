@@ -2,21 +2,24 @@
  * walk the normalized response & grab the deps for each entity. put em all in a Set & flush it down the toilet
  */
 export default function flushDependencies(entitiesDiff, denormalizedDeps, cachedQueries, op, key) {
-  const keyFlush = makeFlushSet(entitiesDiff, denormalizedDeps, op, key);
-  const componentKeys = Object.keys(keyFlush);
-  for (let i = 0; i < componentKeys.length; i++) {
-    const componentKey = componentKeys[i];
-    const keysToFlush = keyFlush[componentKey];
-    const cachedComponentQuery = cachedQueries[componentKey];
-    if (cachedComponentQuery) {
-      for (let flushedKey of keysToFlush) {
-        if (cachedComponentQuery.responses[flushedKey] &&
-          cachedComponentQuery.responses[flushedKey].status === 'loading') {
-          cachedComponentQuery.responses[flushedKey] = undefined;
-        }
-      }
-    }
+  if (cachedQueries[op] && cachedQueries[op].responses && cachedQueries[op].responses[key]) {
+    cachedQueries[op].responses[key] = undefined
   }
+  // const keyFlush = makeFlushSet(entitiesDiff, denormalizedDeps, op, key);
+  // const componentKeys = Object.keys(keyFlush);
+  // for (let i = 0; i < componentKeys.length; i++) {
+  //   const componentKey = componentKeys[i];
+  //   const keysToFlush = keyFlush[componentKey];
+  //   const cachedComponentQuery = cachedQueries[componentKey];
+  //   if (cachedComponentQuery) {
+  //     for (let flushedKey of keysToFlush) {
+  //       if (cachedComponentQuery.responses[flushedKey] &&
+  //         cachedComponentQuery.responses[flushedKey].status === 'loading') {
+  //         cachedComponentQuery.responses[flushedKey] = undefined;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 /**
