@@ -7,7 +7,28 @@ import {isObject} from '../utils';
  * currently we mutate normalizedResponse. it may be worthwhile to make this pure
  * */
 export const shortenNormalizedResponse = (normalizedResponse, cashayState) => {
-  // TODO rewrite by recurisvely finding the outer join
+  const resEntityGlobalMap = normalizedResponse.entities
+  if (!resEntityGlobalMap) return
+  const resEntityAllNames = Object.keys(resEntityGlobalMap)
+  const diff = {...normalizedResponse, entities: {}}
+  resEntityAllNames.forEach(entityName => {
+    const resEntityKeyMap = resEntityGlobalMap[entityName]
+    if (cashayState.entities[entityName]) {
+      const resEntityKeys = Object.keys(resEntityKeyMap)
+      resEntityKeys.forEach(key => {
+        if (resEntityKeyMap[key] !== undefined && resEntityKeyMap[key] !== null &&
+          JSON.stringify(resEntityKeyMap[key]) !== JSON.stringify(cashayState.entities[entityName][key])) {
+          if (!diff.entities[entityName]) {
+            diff.entities[entityName] = {}
+          }
+          diff.entities[entityName][key] = resEntityKeyMap[key]
+        }
+      })
+    } else {
+      diff.entities[entityName] = resEntityKeyMap
+    }
+  })
+  return diff
   // const {entities} = normalizedResponse;
   // const diff = {};
   // if (!entities) return;

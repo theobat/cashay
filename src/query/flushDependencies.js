@@ -10,7 +10,10 @@ export default function flushDependencies(entitiesDiff, denormalizedDeps, cached
     const cachedComponentQuery = cachedQueries[componentKey];
     if (cachedComponentQuery) {
       for (let flushedKey of keysToFlush) {
-        cachedComponentQuery.responses[flushedKey] = undefined;
+        if (cachedComponentQuery.responses[flushedKey] &&
+          cachedComponentQuery.responses[flushedKey].status === 'loading') {
+          cachedComponentQuery.responses[flushedKey] = undefined;
+        }
       }
     }
   }
