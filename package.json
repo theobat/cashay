@@ -32,6 +32,7 @@
   "bugs": {
     "url": "https://github.com/mattkrick/cashay/issues"
   },
+  peerDependencies: { graphql: '^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0-b || ^0.9.0 || ^0.10.0 || ^0.11.0' },
   "homepage": "https://github.com/mattkrick/cashay#readme",
   "devDependencies": {
     "ava": "0.15.2",
@@ -46,7 +47,6 @@
     "xo": "0.15.1"
   },
   "dependencies": {
-    "graphql": "0.12.3",
     "isomorphic-fetch": "^2.2.1",
     "minimist": "^1.2.0",
     "regenerator-runtime": "^0.9.6"
